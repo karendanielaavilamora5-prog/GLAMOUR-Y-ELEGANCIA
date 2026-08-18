@@ -1,0 +1,6 @@
+{
+  "name": "Glamur y Elegancia - Tienda Virtual",
+  "description": "Tienda virtual de moda exclusiva y elegante en negro y dorado con catálogo completo, gestión de usuarios, carrito, checkout y panel de administración.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
