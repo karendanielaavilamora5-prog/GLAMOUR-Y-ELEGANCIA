@@ -1,102 +1,158 @@
-# 👑 Glamur & Elegancia — Tienda Virtual de Alta Costura
+# 👑 Glamur & Elegancia — Plataforma de Comercio Electrónico de Alta Costura
 
-Bienvenido a **Glamur & Elegancia**, una plataforma de comercio electrónico de lujo diseñada con una estética *Geometric Balance* (negro obsidiana y dorado metálico). Incluye catálogo con filtros avanzados, gestión de tallas y stock, carrito reactivo con cupón de descuento, flujo de checkout completo con múltiples métodos de pago, panel de cliente con libreta de direcciones y seguimiento de pedidos, panel administrativo con métricas y gestión de inventario, y base de datos relacional MySQL.
-
----
-
-## 📋 Tabla de Contenidos
-1. [Requisitos Previos del Sistema](#-requisitos-previos-del-sistema)
-2. [Descarga y Clonación del Proyecto](#-descarga-y-clonación-del-proyecto)
-3. [Instalación de Dependencias](#-instalación-de-dependencias)
-4. [Configuración de la Base de Datos (MySQL)](#-configuración-de-la-base-de-datos-mysql)
-5. [Variables de Entorno](#-variables-de-entorno)
-6. [Ejecución en Entorno de Desarrollo](#-ejecución-en-entorno-de-desarrollo)
-7. [Compilación y Despliegue en Producción](#-compilación-y-despliegue-en-producción)
-8. [Cuentas de Acceso y Credenciales Demo](#-cuentas-de-acceso-y-credenciales-demo)
-9. [Estructura del Proyecto](#-estructura-del-proyecto)
-10. [Solución de Problemas Frecuentes](#-solución-de-problemas-frecuentes)
+> **Manual Maestro de Configuración, Arquitectura Técnica y Despliegue Global**  
+> *Versión del Documento: 1.0.0 | Entorno: Full-Stack React / TypeScript / MySQL*
 
 ---
 
-## 💻 Requisitos Previos del Sistema
-
-Antes de iniciar, asegúrate de tener instalado en tu computadora:
-
-- **Node.js**: Versión `18.x`, `20.x` o superior ([Descargar Node.js](https://nodejs.org/)).
-- **NPM** (incluido con Node.js) o gestor alternativo (**pnpm** / **yarn**).
-- **MySQL Server**: Versión `5.7+`, `8.0+` o **MariaDB** `10.3+` (puede ser mediante [XAMPP](https://www.apachefriends.org/), [WampServer](https://www.wampserver.com/), [Laragon](https://laragon.org/) o MySQL Community Server).
-- **Git** (opcional, para clonar el repositorio) ([Descargar Git](https://git-scm.com/)).
-- **Editor de código**: [Visual Studio Code](https://code.visualstudio.com/) recomendado.
+## 📑 Tabla de Contenidos General
+1. [Ficha Técnica del Sistema](#-1-ficha-técnica-del-sistema)
+   - [Lenguajes de Programación](#lenguajes-de-programación)
+   - [Frameworks y Librerías Frontend](#frameworks-y-librerías-frontend)
+   - [Motor y Tipo de Base de Datos](#motor-y-tipo-de-base-de-datos)
+   - [Herramientas de Compilación y Estilos](#herramientas-de-compilación-y-estilos)
+2. [Requisitos Previos del Sistema](#-2-requisitos-previos-del-sistema)
+3. [Configuración Inicial del Entorno](#-3-configuración-inicial-del-entorno)
+   - [Instalación de Node.js y Gestor de Paquetes](#paso-31-instalación-de-nodejs-y-npm)
+   - [Instalación del Servidor MySQL](#paso-32-instalación-y-arranque-del-servidor-mysql)
+4. [Descarga y Configuración del Proyecto](#-4-descarga-y-configuración-del-proyecto)
+   - [Clonación o Extracción](#paso-41-obtención-del-código-fuente)
+   - [Instalación de Módulos (npm install)](#paso-42-instalación-de-dependencias)
+5. [Configuración Global del Entorno](#-5-configuración-global-del-entorno)
+   - [Archivo de Variables de Entorno (.env)](#51-archivo-de-variables-de-entorno-env)
+   - [Configuración de Red, Host y Puerto](#52-configuración-de-red-host-y-puerto)
+   - [Configuración del Compilador TypeScript](#53-configuración-del-compilador-typescript-tsconfigjson)
+6. [Configuración y Carga de la Base de Datos (MySQL)](#-6-configuración-y-carga-de-la-base-de-datos-mysql)
+   - [Estructura del Modelo Relacional](#61-estructura-del-modelo-relacional)
+   - [Importación vía phpMyAdmin (XAMPP / Wamp / Laragon)](#62-importación-mediante-phpmyadmin)
+   - [Importación vía MySQL Workbench o DBeaver](#63-importación-mediante-mysql-workbench--dbeaver)
+   - [Importación vía Consola / Terminal](#64-importación-mediante-consola--terminal)
+7. [Ejecución y Flujo de Trabajo](#-7-ejecución-y-flujo-de-trabajo)
+   - [Modo Desarrollo (Live Reload)](#71-ejecución-en-modo-desarrollo)
+   - [Compilación y Construcción para Producción (Build)](#72-compilación-para-producción)
+   - [Validación de Tipos y Sintaxis (Lint)](#73-validación-de-código-y-tipos)
+8. [Cuentas de Acceso y Roles Preconfigurados](#-8-cuentas-de-acceso-y-roles-preconfigurados)
+9. [Estructura de Directorios y Módulos](#-9-estructura-de-directorios-y-módulos)
+10. [Solución de Problemas Frecuentes (Troubleshooting)](#-10-solución-de-problemas-frecuentes-troubleshooting)
 
 ---
 
-## 📥 Descarga y Clonación del Proyecto
+## 💎 1. Ficha Técnica del Sistema
 
-### Opción A: Mediante Git
-Abre tu terminal y ejecuta:
+La plataforma **Glamur & Elegancia** ha sido construida bajo estándares modernos de desarrollo web, priorizando tipado estricto, rendimiento de renderizado y una arquitectura relacional sólida.
+
+### Lenguajes de Programación
+- **TypeScript 5.8+**: Lenguaje principal de toda la aplicación (Frontend y tipos de datos), garantizando seguridad de tipos, interfaces estrictas y autocompletado inteligente.
+- **JavaScript (ECMAScript 2023 / ES Modules)**: Estándar modular moderno (`"type": "module"` en `package.json`).
+- **SQL (Structured Query Language)**: Dialecto MySQL / MariaDB para la definición de esquemas (DDL), manipulación de datos (DML) y vistas analíticas.
+- **HTML5 & CSS3 Moderno**: Semántica web accesible y diseño responsivo de alto contraste.
+
+### Frameworks y Librerías Frontend
+- **React 19 (`react` & `react-dom` v19.0.1)**: Biblioteca núcleo para interfaces reactivas basada en componentes funcionales y *Hooks* (`useState`, `useEffect`, `useMemo`, `useCallback`).
+- **Vite 6 (`vite` & `@vitejs/plugin-react` v5+)**: Entorno de desarrollo de ultra-alta velocidad y empaquetador para producción con *Hot Module Replacement* (HMR).
+- **Tailwind CSS v4 (`@tailwindcss/vite` & `tailwindcss` v4.1+)**: Framework de utilidades CSS con arquitectura *Geometric Balance*, definiendo paleta de lujo en negro obsidiana (`#000000`), dorado metálico (`#d4af37`) y superficies calibradas.
+- **Motion (`motion` v12+)**: Motor de animaciones fluidas para transiciones de vista, apertura de modales y drawers.
+- **Lucide React (`lucide-react` v0.546+)**: Conjunto de iconografía vectorial SVG de alta precisión.
+
+### Motor y Tipo de Base de Datos
+- **Tipo de Base de Datos**: Relacional (RDBMS / SQL).
+- **Motor Soportado**: **MySQL Server 5.7+ / 8.0+** o **MariaDB 10.3+**.
+- **Motor de Almacenamiento**: `InnoDB` (soporte completo para transacciones ACID, restricciones de clave foránea `FOREIGN KEY` y bloqueos a nivel de fila).
+- **Juego de Caracteres**: `utf8mb4` (soporte universal para caracteres especiales, tildes, eñes y emojis).
+- **Colación**: `utf8mb4_unicode_ci`.
+
+### Herramientas de Compilación y Estilos
+- **Esbuild**: Compilador ultrarrápido para optimización de bundles.
+- **PostCSS / Autoprefixer**: Prefijado automático de propiedades CSS para compatibilidad entre navegadores.
+- **TSX**: Ejecutor de TypeScript para scripts de servidor o utilidades Node.js.
+
+---
+
+## 💻 2. Requisitos Previos del Sistema
+
+Asegúrate de contar con el siguiente software instalado en tu estación de trabajo (Windows, macOS o Linux):
+
+| Herramienta | Versión Recomendada | Enlace Oficial |
+| :--- | :--- | :--- |
+| **Node.js** | `v18.20.0`, `v20.x` o superior (LTS) | [nodejs.org](https://nodejs.org/) |
+| **NPM** | `v9.x` o `v10.x` (se instala con Node.js) | [npmjs.com](https://www.npmjs.com/) |
+| **Servidor MySQL** | MySQL 8.0+ o MariaDB (XAMPP / Wamp / Laragon) | [apachefriends.org](https://www.apachefriends.org/) |
+| **Git** | `v2.40+` (opcional para clonación) | [git-scm.com](https://git-scm.com/) |
+| **VS Code** | Última versión (recomendado) | [code.visualstudio.com](https://code.visualstudio.com/) |
+
+---
+
+## 🛠️ 3. Configuración Inicial del Entorno
+
+### Paso 3.1: Instalación de Node.js y NPM
+1. Descarga el instalador de **Node.js LTS** correspondiente a tu sistema operativo.
+2. Ejecuta el instalador siguiendo los pasos predeterminados.
+3. Abre una terminal (PowerShell, CMD, Bash o Zsh) y verifica la instalación ejecutando:
+   ```bash
+   node -v
+   npm -v
+   ```
+   *Deberías ver las versiones instaladas (ejemplo: `v20.12.0` y `10.5.0`).*
+
+### Paso 3.2: Instalación y Arranque del Servidor MySQL
+- **Si usas XAMPP / WampServer / Laragon:**
+  1. Abre el Panel de Control de XAMPP.
+  2. Inicia los módulos **Apache** y **MySQL** haciendo clic en **Start**.
+  3. Comprueba que el puerto `3306` esté activo.
+- **Si usas MySQL Server instalado nativamente:**
+  1. Asegúrate de que el servicio `MySQL80` esté en ejecución en tus Servicios de Windows o daemon de Linux/macOS.
+
+---
+
+## 📥 4. Descarga y Configuración del Proyecto
+
+### Paso 4.1: Obtención del Código Fuente
+
+#### Opción A — Clonación mediante Git:
 ```bash
 git clone https://github.com/tu-usuario/glamur-elegancia.git
 cd glamur-elegancia
 ```
 
-### Opción B: Descarga directa ZIP
-1. Descarga el archivo `.zip` desde el repositorio o menú de exportación.
-2. Descomprime el archivo en una carpeta de tu preferencia (ej: `C:\proyectos\glamur-elegancia` o `~/proyectos/glamur-elegancia`).
-3. Abre una terminal dentro de esa carpeta.
+#### Opción B — Descarga manual en archivo ZIP:
+1. Descarga el paquete `.zip` del proyecto.
+2. Descomprímelo en una ruta sin caracteres especiales ni espacios largos (ejemplo: `C:\workspace\glamur-elegancia` o `~/dev/glamur-elegancia`).
+3. Abre tu terminal y posiciónate en el directorio raíz del proyecto:
+   ```bash
+   cd glamur-elegancia
+   ```
 
----
-
-## 📦 Instalación de Dependencias
-
-Ejecuta el siguiente comando en la raíz del proyecto para instalar todos los paquetes requeridos:
+### Paso 4.2: Instalación de Dependencias
+Ejecuta el siguiente comando en la raíz del proyecto para descargar e instalar automáticamente todas las librerías declaradas en `package.json`:
 
 ```bash
 npm install
 ```
 
-*(Si utilizas `pnpm`, ejecuta `pnpm install`; si utilizas `yarn`, ejecuta `yarn`)*.
+*(El proceso creará la carpeta `node_modules/` y resolverá el árbol de dependencias con `package-lock.json`)*.
 
 ---
 
-## 🗄️ Configuración de la Base de Datos (MySQL)
+## 🌐 5. Configuración Global del Entorno
 
-El proyecto incluye el esquema SQL completo y datos de prueba (*seed data*) en la carpeta `database/`.
+### 5.1. Archivo de Variables de Entorno (`.env`)
+Crea un archivo llamado `.env` en la raíz del proyecto (junto a `package.json`) con la siguiente configuración base:
 
-### Pasos para importar la base de datos:
-
-#### Método 1: Usando phpMyAdmin (XAMPP / WAMP / Laragon)
-1. Inicia los servicios de **Apache** y **MySQL** en tu panel de control (ej. XAMPP).
-2. Abre tu navegador web e ingresa a: `http://localhost/phpmyadmin`
-3. Ve a la pestaña **Importar** en el menú superior.
-4. Haz clic en **Seleccionar archivo** y busca el archivo:
-   `database/glamur_elegancia_schema.sql`
-5. Deja las opciones predeterminadas y haz clic en el botón **Importar** (o **Continuar**).
-6. Se creará automáticamente la base de datos `glamur_elegancia_db` con sus 13 tablas, índices y datos iniciales.
-
-#### Método 2: Usando MySQL Workbench o DBeaver
-1. Abre tu cliente SQL y conéctate a tu servidor local (`localhost:3306`).
-2. Ve a **File > Open SQL Script...** y selecciona `database/glamur_elegancia_schema.sql`.
-3. Presiona el botón de ejecutar (icono de rayo ⚡).
-
-#### Método 3: Desde la Terminal / Consola de Comandos
-```bash
-mysql -u root -p < database/glamur_elegancia_schema.sql
-```
-*(Si no tienes contraseña configurada en tu MySQL local, simplemente presiona `Enter` cuando la solicite)*.
-
----
-
-## ⚙️ Variables de Entorno
-
-Si deseas conectar la aplicación a un servidor backend propio o servicios adicionales:
-
-1. Crea un archivo `.env` en la raíz del proyecto (puedes basarte en `.env.example` si existe):
 ```env
-# Configuración del servidor de desarrollo
-PORT=3000
-VITE_APP_NAME="Glamur & Elegancia"
+# =====================================================================
+# CONFIGURACIÓN GLOBAL — GLAMUR & ELEGANCIA
+# =====================================================================
 
-# Conexión MySQL (para integración backend si se requiere)
+# Configuración del Servidor y Vite
+PORT=3000
+HOST=0.0.0.0
+NODE_ENV=development
+
+# Nombre público de la aplicación
+VITE_APP_NAME="Glamur & Elegancia"
+VITE_APP_TAGLINE="Alta Costura & Lujo Contemporáneo"
+
+# Parámetros de Conexión a Base de Datos MySQL (para Backend / API)
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
@@ -104,115 +160,234 @@ DB_PASSWORD=
 DB_NAME=glamur_elegancia_db
 ```
 
+### 5.2. Configuración de Red, Host y Puerto
+La aplicación está configurada de forma predeterminada para escuchar en:
+- **Host**: `0.0.0.0` (permite acceso local y desde otros dispositivos en la red LAN).
+- **Puerto**: `3000`.
+
+En `package.json`:
+```json
+"scripts": {
+  "dev": "vite --port=3000 --host=0.0.0.0",
+  "build": "vite build",
+  "preview": "vite preview",
+  "clean": "rm -rf dist server.js",
+  "lint": "tsc --noEmit"
+}
+```
+
+### 5.3. Configuración del Compilador TypeScript (`tsconfig.json`)
+El compilador TypeScript está configurado en modo estricto (`"strict": true`) para asegurar:
+- Verificación exhaustiva de valores `null` e `undefined`.
+- Compatibilidad nativa con JSX de React 19 (`"jsx": "react-jsx"`).
+- Resolución de módulos con estándar Bundler (`"moduleResolution": "bundler"`).
+
 ---
 
-## 🚀 Ejecución en Entorno de Desarrollo
+## 🗄️ 6. Configuración y Carga de la Base de Datos (MySQL)
 
-Para iniciar el servidor de desarrollo local con recarga rápida:
+El archivo maestro de base de datos se encuentra ubicado en:
+📂 **`/database/glamur_elegancia_schema.sql`**
+
+### 6.1. Estructura del Modelo Relacional
+El script crea la base de datos `glamur_elegancia_db` e inicializa **13 tablas relacionales normalizadas**:
+
+1. `usuarios`: Clientes y administradores con roles (`cliente`, `administrador`), datos personales y hashes de contraseña.
+2. `direcciones_usuario`: Libreta de direcciones de despacho asociadas a cada usuario (`1:N`) con marca de predeterminada.
+3. `categorias`: Colecciones principales (*Mujer, Hombre, Niños, Zapatos, Accesorios*) con slugs únicos.
+4. `productos`: Catálogo con SKU único, precios normales y de oferta, banderas promocionales, stock total y calificaciones.
+5. `producto_imagenes`: Galería de fotos secundarias en alta definición (`1:N`).
+6. `producto_tallas`: Control de inventario discriminado por talla (*XS, S, M, L, XL, 36-42, 4-12, Única*).
+7. `resenas`: Opiniones y puntuaciones de 1 a 5 estrellas con validación de clave foránea de usuario y producto.
+8. `cupones`: Códigos promocionales (*GLAMURVIP, ORO2026, ELEGANCIA10, BIENVENIDA*) con límites de uso y compra mínima.
+9. `pedidos`: Cabecera de órdenes con número único (`GLE-2026-XXXX`), totales monetarios, métodos de pago y código de rastreo.
+10. `pedido_detalles`: Items individuales por pedido con snapshot de precio, prenda y talla.
+11. `pedido_historial_estados`: Línea de tiempo de logística (*Pendiente, Confirmado, En preparación, Enviado, Entregado*).
+12. `favoritos`: Lista de deseos (*Wishlist*) con clave única compuesta (`id_usuario`, `id_producto`).
+13. `mensajes_contacto`: Buzón de asesoría VIP y solicitudes corporativas.
+14. **Vistas SQL**: `vista_resumen_pedidos` y `vista_catalogo_activo` para reportería rápida.
+
+---
+
+### 6.2. Importación mediante phpMyAdmin
+1. Abre tu navegador web en: `http://localhost/phpmyadmin`
+2. Haz clic en la pestaña superior **Importar**.
+3. Haz clic en **Seleccionar archivo** (*Choose file*) y navega hasta la carpeta del proyecto:
+   `glamur-elegancia/database/glamur_elegancia_schema.sql`
+4. En **Juego de caracteres del archivo**, asegúrate de que esté en `utf-8`.
+5. Haz clic en el botón inferior **Importar** o **Continuar**.
+6. Recibirás un mensaje de confirmación en verde indicando que todas las consultas se ejecutaron con éxito.
+
+---
+
+### 6.3. Importación mediante MySQL Workbench / DBeaver
+1. Abre **MySQL Workbench** o **DBeaver** y conéctate a tu instancia local (`localhost:3306`).
+2. Ve al menú superior: **File** > **Open SQL Script...** (o presiona `Ctrl + Shift + O`).
+3. Selecciona el archivo `database/glamur_elegancia_schema.sql`.
+4. Haz clic en el icono del **Rayo ⚡** (*Execute all statements*).
+5. En el panel izquierdo de *Schemas*, haz clic derecho y selecciona **Refresh All** para ver la base de datos `glamur_elegancia_db`.
+
+---
+
+### 6.4. Importación mediante Consola / Terminal
+Si prefieres la línea de comandos de MySQL:
+
+```bash
+# En Windows / Linux / macOS:
+mysql -u root -p < database/glamur_elegancia_schema.sql
+```
+*(Ingresa tu contraseña de MySQL o presiona Enter si el usuario root no tiene clave)*.
+
+---
+
+## 🚀 7. Ejecución y Flujo de Trabajo
+
+### 7.1. Ejecución en Modo Desarrollo
+Para levantar el servidor de desarrollo local con recarga instantánea en caliente:
 
 ```bash
 npm run dev
 ```
 
-Una vez iniciado, abre tu navegador en:
-👉 **`http://localhost:3000`**
+La consola te indicará la URL activa:
+```text
+  VITE v6.2.3  ready in 240 ms
+
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: http://192.168.1.XX:3000/
+```
+
+Abre tu navegador en: 👉 **`http://localhost:3000`**
 
 ---
 
-## 🏗️ Compilación y Despliegue en Producción
-
-Para generar los archivos estáticos listos para producción:
+### 7.2. Compilación para Producción
+Para compilar la aplicación, optimizar los activos, generar minificación y verificar tipos:
 
 ```bash
 npm run build
 ```
+El resultado se generará en la carpeta `/dist/`, listo para ser servido por cualquier servidor web (Nginx, Apache, AWS S3, Cloud Run, Vercel, Netlify).
 
-Los archivos optimizados y minificados se generarán dentro de la carpeta `dist/`.
-
-Para previsualizar la compilación de producción localmente:
+Para probar localmente el bundle compilado:
 ```bash
 npm run preview
 ```
 
 ---
 
-## 🔑 Cuentas de Acceso y Credenciales Demo
+### 7.3. Validación de Código y Tipos
+Para ejecutar el linter y verificar que no existan inconsistencias de tipado TypeScript:
 
-La aplicación cuenta con autenticación interactiva y roles diferenciados:
-
-| Rol | Correo Electrónico | Contraseña Demo | Acceso / Capacidades |
-| :--- | :--- | :--- | :--- |
-| **Administrador** 👑 | `admin@glamur.com` | `admin123` | Control total, métricas financieras, gestión de catálogo, pedidos, cupones y mensajes |
-| **Cliente VIP** ✨ | `cliente@glamur.com` | `daniela123` | Compra de prendas, historial de pedidos con rastreo, libreta de direcciones y lista de deseos |
-| **Cliente General** | `santiago.m@example.com` | `santiago123` | Compras, navegación y reseñas de productos |
-
-> 💡 *Tip: También puedes registrar un usuario nuevo directamente desde el botón **"Acceder"** en la barra de navegación.*
+```bash
+npm run lint
+```
 
 ---
 
-## 📁 Estructura del Proyecto
+## 🔑 8. Cuentas de Acceso y Roles Preconfigurados
+
+La aplicación cuenta con autenticación reactiva y control de acceso basado en roles (*RBAC*):
+
+| Rol | Correo Electrónico | Contraseña Demo | Vista y Funcionalidades |
+| :--- | :--- | :--- | :--- |
+| **👑 Administrador** | `admin@glamur.com` | `admin123` | **Panel Admin Completo**: Métricas financieras en tiempo real, creación/edición de prendas con tallas y stock, gestión de estados de pedidos con actualización de guía, creación de cupones de descuento y lectura del buzón VIP. |
+| **✨ Cliente VIP** | `cliente@glamur.com` | `daniela123` | **Portal de Cliente**: Historial de órdenes con rastreo en vivo de mensajería, libreta de direcciones múltiples, lista de deseos sincronizada y configuración de cuenta. |
+| **👤 Cliente Regular** | `santiago.m@example.com` | `santiago123` | **Portal de Cliente**: Catálogo, compras y valoraciones. |
+
+> 💡 *Nota: También puedes crear usuarios nuevos en cualquier momento utilizando el botón **"Registrarse"** del modal de acceso.*
+
+---
+
+## 📂 9. Estructura de Directorios y Módulos
 
 ```text
 glamur-elegancia/
-├── database/                             # Base de datos relacional
-│   ├── glamur_elegancia_schema.sql       # Script SQL con DDL, DML y Seed Data
-│   └── README.md                         # Guía rápida específica de la base de datos
-├── public/                               # Archivos públicos y favicon
-├── src/
-│   ├── components/                       # Componentes modulares de la interfaz
-│   │   ├── AdminView.tsx                 # Panel administrativo de gestión
-│   │   ├── AuthModal.tsx                 # Modal de Login / Registro
-│   │   ├── CartDrawer.tsx                # Carrito lateral deslizable y cupones
-│   │   ├── CatalogView.tsx               # Catálogo con filtros y ordenamiento
-│   │   ├── CheckoutView.tsx              # Pasarela de pago y confirmación
-│   │   ├── ContactView.tsx               # Formulario concierge y preguntas frecuentes
-│   │   ├── FavoritesView.tsx             # Lista de deseos (Wishlist)
-│   │   ├── Footer.tsx                    # Pie de página y sellos de confianza
-│   │   ├── HomeView.tsx                  # Portada, colecciones y novedades
-│   │   ├── Navbar.tsx                    # Navegación, buscador y accesos rápidos
-│   │   ├── OrderConfirmationView.tsx     # Recibo de compra detallado
-│   │   ├── OrderTrackingView.tsx         # Seguimiento de envío en tiempo real
-│   │   ├── ProductDetailView.tsx         # Vista de detalle de prenda y selector de talla
-│   │   └── ProfileView.tsx               # Perfil, direcciones y pedidos del usuario
+├── database/                             # Base de datos relacional MySQL
+│   ├── glamur_elegancia_schema.sql       # Script SQL maestro (DDL + DML + Seed Data)
+│   └── README.md                         # Instrucciones breves de la base de datos
+├── public/                               # Archivos estáticos y favicons
+├── src/                                  # Código fuente de la aplicación
+│   ├── components/                       # Componentes modulares de interfaz de usuario
+│   │   ├── AdminView.tsx                 # Panel de administración, inventario y métricas
+│   │   ├── AuthModal.tsx                 # Modal de autenticación (Login / Registro / Switch demo)
+│   │   ├── CartDrawer.tsx                # Carrito deslizable lateral con cálculo y cupones
+│   │   ├── CatalogView.tsx               # Catálogo con filtros de categoría, precio, tallas y búsqueda
+│   │   ├── CheckoutView.tsx              # Pasarela de pago multicriterio (Tarjeta, PSE, Contra Entrega)
+│   │   ├── ContactView.tsx               # Formulario de atención VIP, concierge y FAQ
+│   │   ├── FavoritesView.tsx             # Vista de lista de deseos (Wishlist)
+│   │   ├── Footer.tsx                    # Pie de página de lujo con enlaces y sellos de seguridad
+│   │   ├── HomeView.tsx                  # Portada interactiva, banner de gala y colecciones
+│   │   ├── Navbar.tsx                    # Barra superior con buscador en vivo, categorías y accesos
+│   │   ├── OrderConfirmationView.tsx     # Recibo y resumen de compra confirmada
+│   │   ├── OrderTrackingView.tsx         # Seguimiento de envío con trazabilidad paso a paso
+│   │   ├── ProductDetailView.tsx         # Ficha técnica de producto, galería y selector de tallas
+│   │   └── ProfileView.tsx               # Perfil de usuario, libreta de direcciones y pedidos
 │   ├── data/
-│   │   └── initialData.ts                # Datos iniciales para el estado reactivo
-│   ├── App.tsx                           # Enrutador y gestor de estado principal
-│   ├── index.css                         # Estilos Tailwind y tema Geometric Balance
-│   ├── main.tsx                          # Punto de entrada de React 19
-│   └── types.ts                          # Interfaces y modelos TypeScript
-├── index.html                            # Documento HTML principal con fuentes Cinzel/Montserrat
-├── package.json                          # Manifiesto de dependencias y scripts
-├── tsconfig.json                         # Configuración de TypeScript
-├── vite.config.ts                        # Configuración del empaquetador Vite y Tailwind
-└── README.md                             # Este manual de instrucciones
+│   │   └── initialData.ts                # Semilla de datos iniciales y estado reactivo sincronizado
+│   ├── App.tsx                           # Enrutador de vistas y estado centralizado de la app
+│   ├── index.css                         # Configuración Tailwind v4, temas y fuentes de lujo
+│   ├── main.tsx                          # Punto de montaje principal de React 19
+│   └── types.ts                          # Definición de tipos, interfaces y enums de TypeScript
+├── index.html                            # Entrada HTML5 con carga de fuentes Cinzel y Montserrat
+├── package.json                          # Metadatos, dependencias y scripts de ejecución
+├── tsconfig.json                         # Configuración estricta del compilador TypeScript
+├── vite.config.ts                        # Configuración del bundler Vite y plugins
+└── README.md                             # Manual completo del proyecto (este archivo)
 ```
 
 ---
 
-## 🛠️ Solución de Problemas Frecuentes
+## 🔧 10. Solución de Problemas Frecuentes (Troubleshooting)
 
-### 1. El puerto 3000 ya está en uso
-Si el puerto 3000 está ocupado por otra aplicación, puedes iniciar Vite en otro puerto o liberarlo:
+### ❓ Problema 1: El puerto 3000 está ocupado por otro proceso
+**Causa**: Otra aplicación (como otro servidor Node.js o Docker) está utilizando el puerto 3000.  
+**Solución**:
+- En Windows (PowerShell):
+  ```powershell
+  npx kill-port 3000
+  npm run dev
+  ```
+- O modifica el puerto en `package.json`:
+  ```json
+  "dev": "vite --port=3001 --host=0.0.0.0"
+  ```
+
+---
+
+### ❓ Problema 2: Error `Access denied for user 'root'@'localhost'` en MySQL
+**Causa**: Las credenciales de acceso a tu servidor MySQL son diferentes a las predeterminadas sin contraseña.  
+**Solución**:
+Asegúrate de pasar el parámetro `-p` e introducir la contraseña correcta de tu usuario root de MySQL:
 ```bash
-npx kill-port 3000
-npm run dev
+mysql -u root -p tu_contrasena < database/glamur_elegancia_schema.sql
 ```
 
-### 2. Error al importar el archivo SQL por tamaño o codificación
-Asegúrate de que la codificación de tu servidor MySQL esté configurada en `utf8mb4`. En phpMyAdmin, selecciona **Juego de caracteres: utf-8**.
+---
 
-### 3. Las imágenes no cargan
-Las imágenes del catálogo provienen de la CDN de Unsplash en alta definición. Asegúrate de tener conexión a Internet activa.
+### ❓ Problema 3: Error `max_allowed_packet` al importar el archivo SQL
+**Causa**: La configuración de tu servidor MySQL tiene un límite bajo para paquetes SQL grandes.  
+**Solución**:
+Abre tu archivo `my.ini` (en XAMPP: *Config > my.ini*) y ajusta la siguiente directiva:
+```ini
+max_allowed_packet = 64M
+```
+Reinicia el servicio MySQL en XAMPP y reintenta la importación.
 
-### 4. Limpiar caché de dependencias
-Si experimentas algún comportamiento inesperado tras actualizar módulos:
+---
+
+### ❓ Problema 4: Error `Cannot find module` o discrepancias tras clonar
+**Causa**: La carpeta `node_modules` no se ha instalado correctamente o la caché de NPM está corrupta.  
+**Solución**:
 ```bash
 npm run clean
+npm cache clean --force
 npm install
 npm run dev
 ```
 
 ---
 
-## 💎 Créditos y Licencia
-Desarrollado para **Glamur & Elegancia** — Alta Costura y Lujo Contemporáneo. Todos los derechos reservados.
+## 🏛️ Licencia y Propiedad Intelectual
+Proyecto desarrollado con los más altos estándares para la boutique de lujo **Glamur & Elegancia**.  
+Todos los derechos reservados © 2026.
